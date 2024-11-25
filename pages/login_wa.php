@@ -123,8 +123,32 @@
                             </div>
 
                             <div class="whatsapp-qr-code">
-                                <img src="../assets/images/sby/contoh_qr.png" alt="QR Code">
+                                <img id="qr-code-image" src="" alt="QR Code">
+                                <p id="qr-status">Loading QR Code...</p>
                             </div>
+
+                            <script>
+                                async function fetchQRCode() {
+                                    try {
+                                        const response = await fetch('http://localhost:3000/qr'); // Adjust URL as needed
+                                        const data = await response.json();
+
+                                        if (data.success) {
+                                            document.getElementById('qr-code-image').src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(data.qr)}&size=200x200`;
+                                            document.getElementById('qr-status').textContent = '';
+                                        } else {
+                                            document.getElementById('qr-status').textContent = data.message;
+                                        }
+                                    } catch (error) {
+                                        document.getElementById('qr-status').textContent = 'Failed to load QR Code.';
+                                        console.error(error);
+                                    }
+                                }
+
+                                // Fetch QR Code every 5 seconds
+                                setInterval(fetchQRCode, 5000);
+                                fetchQRCode(); // Initial call
+                            </script>
 
                             <div class="whatsapp-keep-signed">
                                 <input type="checkbox" id="keep-signed">

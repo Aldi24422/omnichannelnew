@@ -116,7 +116,7 @@
                             <div class="whatsapp-instructions">
                                 <ol>
                                     <li>Buka WhatsApp di telepon Anda</li>
-                                    <li>Ketuk Menu <strong>⋮</strong> di Androi, atau Pengaturan <strong>⚙️</strong> di Iphone</li>
+                                    <li>Ketuk Menu <strong>⋮</strong> di Android, atau Pengaturan <strong>⚙️</strong> di Iphone</li>
                                     <li>Ketuk <b>Perangkat tertaut</b> lalu <b>Tautkan perangkat</b></li>
                                     <li>Arahkan telepon Anda di layar ini untuk memindai kode QR</li>
                                 </ol>

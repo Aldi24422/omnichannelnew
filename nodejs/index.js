@@ -52,7 +52,6 @@ app.get("/qr", (req, res) => {
 
 client.initialize();
 
-// Start Express server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

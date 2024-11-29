@@ -66,7 +66,6 @@ const getAnswer = async (keyword) => {
     if (results.length > 0) {
       return results[0].jawaban; // Kirim jawaban yang ditemukan
     } else {
-      return "Maaf, saya tidak memahami pertanyaan Anda.";
     }
   } catch (err) {
     console.error("Database query error:", err); // Log error detail

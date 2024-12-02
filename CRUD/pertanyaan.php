@@ -23,7 +23,7 @@ function updatePertanyaan($id, $keyword, $jawaban, $lampiran = null) {
     $stmt->execute(['keyword' => $keyword, 'jawaban' => $jawaban, 'lampiran' => $lampiran, 'id' => $id]);
 }
 
-// Delete Data
+// Delete Data 
 function deletePertanyaan($id) {
     global $conn;
     $stmt = $conn->prepare("DELETE FROM pertanyaan WHERE id = :id");

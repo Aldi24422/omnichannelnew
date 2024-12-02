@@ -42,13 +42,12 @@
                      </div>
                  </div>
                  <!-- Container-fluid starts-->
-                 <div class="container-fluid">
+                 <!-- <div class="container-fluid">
                      <div class="row">
                          <div class="col call-chat-sidebar col-sm-12">
                              <div class="card">
                                  <div class="card-body chat-body">
                                      <div class="chat-box">
-                                         <!-- Chat left side Start-->
                                          <div class="chat-left-aside">
                                              <div class="media"><img class="rounded-circle user-image" src="../assets/images/user/12.png" alt="">
                                                  <div class="about">
@@ -124,7 +123,7 @@
                                                  </ul>
                                              </div>
                                          </div>
-                                         <!-- Chat left side Ends-->
+                                          -->
                                      </div>
                                  </div>
                              </div>

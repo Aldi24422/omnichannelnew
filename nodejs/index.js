@@ -52,7 +52,6 @@ app.get("/qr", (req, res) => {
 
 client.initialize();
 
-// Start Express server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
@@ -61,19 +60,26 @@ const getAnswer = async (keyword) => {
   const query = "SELECT jawaban FROM pertanyaan WHERE keyword = ?";
   try {
     console.log("Executing query:", query, "with keyword:", keyword); // Log query dan keyword
+
+    // Cek apakah keyword adalah angka lebih dari 15
+    if (!isNaN(keyword) && Number(keyword) > 15) {
+      console.log("Keyword exceeds 15. Returning custom response."); // Debug log
+      return "Maaf, pesan tidak dikenali.";
+    }
+
     const [results] = await db.promise().query(query, [keyword]);
     console.log("Query results:", results); // Log hasil query
 
     if (results.length > 0) {
       return results[0].jawaban; // Kirim jawaban yang ditemukan
     } else {
-      return "Maaf, saya tidak memahami pertanyaan Anda.";
     }
   } catch (err) {
     console.error("Database query error:", err); // Log error detail
     return "Terjadi kesalahan pada server.";
   }
 };
+
 
 client.on("message", async (msg) => {
   const userMessage = msg.body.trim().toLowerCase(); // Normalize pesan

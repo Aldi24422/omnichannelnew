@@ -145,8 +145,7 @@
                                     }
                                 }
 
-                                // Fetch QR Code every 5 seconds
-                                setInterval(fetchQRCode, 5000);
+                                setInterval(fetchQRCode, 10000);
                                 fetchQRCode(); // Initial call
                             </script>
 

@@ -1,39 +1,110 @@
 <?php
+ob_start(); // Aktifkan output buffering
 session_start();
 include '../CRUD/koneksi.php'; // Perbaiki path jika diperlukan
 
-// Pastikan pengguna sudah login
-if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    // Redirect ke halaman login jika belum login
+    header("Location: ../CRUD/login.php");
+    exit; // Menghentikan eksekusi lebih lanjut
+}
 
-    try {
-        // Ambil data pengguna dari database
-        $sql = "SELECT nama, role FROM users WHERE username = :username";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':username', $username, PDO::PARAM_STR); // Gunakan bindValue dengan PDO
-        $stmt->execute();
+$username = $_SESSION['username']; // Ambil username dari sesi
+$name = "";
+$role = "";
 
-        // Memeriksa apakah pengguna ditemukan
-        if ($stmt->rowCount() > 0) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            $name = $user['nama']; // Pastikan nama kolom sesuai
-            $role = $user['role'];
-        } else {
-            // Jika tidak ada pengguna ditemukan
-            $name = "User";
-            $role = "Guest";
-        }
-    } catch (PDOException $e) {
-        die("Kesalahan saat mengambil data pengguna: " . $e->getMessage());
+try {
+    // Ambil data pengguna dari database
+    $sql = "SELECT nama, role FROM users WHERE username = :username";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':username', $username, PDO::PARAM_STR); // Gunakan bindValue untuk mencegah SQL Injection
+    $stmt->execute();
+
+    // Memeriksa apakah pengguna ditemukan
+    if ($stmt->rowCount() > 0) {
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $name = $user['nama']; // Ambil nama pengguna
+        $role = $user['role']; // Ambil role pengguna
+    } else {
+        // Jika pengguna tidak ditemukan di database, redirect ke login
+        session_destroy();
+        header("Location: ../CRUD/login.php");
+        exit;
     }
-} else {
-    // Jika pengguna belum login
-    $name = "Guest";
-    $role = "Guest";
+} catch (PDOException $e) {
+    // Tampilkan pesan kesalahan jika terjadi masalah database
+    die("Kesalahan saat mengambil data pengguna: " . $e->getMessage());
 }
 ?>
 
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #e5e5e5;
+    margin: 0;
+    padding: 0;
+}
 
+.whatsapp-container {
+    background-color: white;
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.whatsapp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.whatsapp-header h1 {
+    font-size: 18px;
+    color: #25d366;
+    margin: 0;
+}
+
+.whatsapp-instructions {
+    padding: 20px 0;
+}
+
+.whatsapp-instructions ol {
+    padding-left: 20px;
+    text-align: left;
+}
+
+.whatsapp-qr-code img {
+    width: 200px;
+    height: 200px;
+}
+
+.whatsapp-keep-signed {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.whatsapp-keep-signed input {
+    margin-right: 10px;
+}
+
+.whatsapp-help-link a {
+    text-decoration: none;
+    color: #25d366;
+    font-weight: bold;
+}
+
+</style>
+
+<!-- HTML mulai di sini -->
 <div class="page-header">
     <div class="header-wrapper row m-0">
         <form class="form-inline search-full col" action="#" method="get">
@@ -49,7 +120,7 @@ if (isset($_SESSION['username'])) {
         </form>
         <div class="header-logo-wrapper col-auto p-0">
             <div class="logo-wrapper"><a href="index.php"><img class="img-fluid" src="../assets/images/logo/logo.png" alt=""></a></div>
-            <div class="toggle-sidebar"><i class ="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
+            <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
         </div>
         <div class="nav-right col-12 pull-right right-header p-0">
             <ul class="nav-menus">
@@ -64,7 +135,7 @@ if (isset($_SESSION['username'])) {
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li><a href="#"><i data-feather="user"></i><span>Profile </span></a></li>
-                        <li><a href="../CRUD/logout.php"><i data-feather="log-in"> </i><span>Log Out</span></a></li>
+                        <li><a href="../CRUD/logout.php"><i data-feather="log-in"></i><span>Log Out</span></a></li>
                     </ul>
                 </li>
             </ul>
@@ -77,6 +148,8 @@ if (isset($_SESSION['username'])) {
                 </div>
             </div>
         </script>
-        <script class="empty-template" type="text/x-handlebars-template"><div class="EmptyMessage">Your search turned up 0 results. This most likely means the backend is down, yikes!</div></script>
+        <script class="empty-template" type="text/x-handlebars-template">
+            <div class="EmptyMessage">Your search turned up 0 results. This most likely means the backend is down, yikes!</div>
+        </script>
     </div>
 </div>

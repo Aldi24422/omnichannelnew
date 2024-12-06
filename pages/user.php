@@ -1,3 +1,15 @@
+<?php
+// Mulai sesi PHP
+session_start();
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    // Redirect ke halaman login dengan pesan error
+    header("Location: ../pages/login.php?error=unauthorized");
+    exit();
+}
+?>
+
  <!DOCTYPE html>
  <html lang="en">
 

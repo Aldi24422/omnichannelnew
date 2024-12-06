@@ -1,3 +1,15 @@
+<?php
+// Mulai sesi PHP
+session_start();
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    // Redirect ke halaman login dengan pesan error
+    header("Location: ../pages/login.php?error=unauthorized");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,12 +24,10 @@
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
     <!-- tap on top ends -->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
-        <!-- Page Header -->
-        <?php require_once("../includes/header.php"); ?>
-        <!-- Page Header Ends -->
 
         <div class="page-body-wrapper">
             <!-- Page Sidebar -->
+            <?php require_once("../includes/header.php"); ?>
             <?php require_once("../includes/sidebar.php"); ?>
             <!-- Page Sidebar Ends -->
 

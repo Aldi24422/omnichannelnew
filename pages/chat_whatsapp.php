@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
  <html lang="en">
 
  <head>
@@ -42,7 +42,7 @@
                      </div>
                  </div>
                  <!-- Container-fluid starts-->
-                 <!-- <div class="container-fluid">
+                 <div class="container-fluid">
                      <div class="row">
                          <div class="col call-chat-sidebar col-sm-12">
                              <div class="card">

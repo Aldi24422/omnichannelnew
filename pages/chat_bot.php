@@ -36,7 +36,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="page-title">
                         <div class="row">
                             <div class="col-6">
-                                <h3>CRUD ChatBot WA</h3>
+                                <h3>ChatBot WA</h3>
                             </div>
                             <div class="col-6">
                                 <ol class="breadcrumb">
@@ -54,7 +54,6 @@ if (!isset($_SESSION['username'])) {
                             <div class="card">
                                 <div class="card-header">
                                     <h5>Setting ChatBot WA</h5>
-                                    <span>Isi bank pertanyaan untuk kebutuhan Chatbot Whatsapp</span>
                                     <button class="btn btn-success btn-sm float-right" type="button" data-bs-toggle="modal" data-bs-target="#tambahPertanyaan">Tambah Data</button>
                                 </div>
 

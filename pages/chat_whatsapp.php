@@ -1,11 +1,11 @@
 <!DOCTYPE html>
  <html lang="en">
 
- <head>
-     <?php
-        require_once("../includes/head.php");
-        ?>
- </head>
+<head>
+    <?php
+    require_once("../includes/head.php");
+    ?>
+</head>
 
  <body>
      <!-- tap on top starts-->
@@ -207,12 +207,77 @@
                 require_once("../includes/footer.php");
                 ?>
 
-         </div>
-     </div>
+    <script>
+        async function loadChatHistory() {
+            try {
+                const response = await fetch("http://localhost:3000/chat-history");
+                const data = await response.json();
+                const chatContainer = document.querySelector(".chat-history ul");
 
-     <?php
-        require_once("../includes/script.php");
-        ?>
- </body>
+                if (data.success) {
+                    chatContainer.innerHTML = "";
+                    data.data.forEach(chat => {
+                        const li = document.createElement("li");
+                        li.className = chat.sender === "user" ? "clearfix" : "";
+                        li.innerHTML = `
+                            <div class="message ${chat.sender === "user" ? "my-message" : "other-message pull-right"}">
+                                <div class="message-data ${chat.sender === "user" ? "text-end" : ""}">
+                                    <span class="message-data-time">${new Date(chat.timestamp).toLocaleTimeString()}</span>
+                                </div>
+                                ${chat.message}
+                            </div>
+                        `;
+                        chatContainer.appendChild(li);
+                    });
+                }
+            } catch (err) {
+                console.error("Error loading chat history:", err);
+            }
+        }
 
- </html>
+        async function sendMessage(input) {
+            try {
+                const response = await fetch("http://localhost:3000/send-message", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        message: input
+                    }),
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    loadChatHistory();
+                } else {
+                    console.error("Error sending message:", data.message);
+                }
+            } catch (err) {
+                console.error("Error sending message:", err);
+            }
+        }
+
+        document.querySelector("#message-to-send").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                const input = e.target.value.trim();
+                if (input) {
+                    sendMessage(input);
+                    e.target.value = "";
+                }
+            }
+        });
+
+        document.querySelector("#send-button").addEventListener("click", () => {
+            const input = document.querySelector("#message-to-send").value.trim();
+            if (input) {
+                sendMessage(input);
+                document.querySelector("#message-to-send").value = "";
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", loadChatHistory);
+    </script>
+</body>
+
+</html>

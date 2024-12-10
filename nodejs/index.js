@@ -90,27 +90,12 @@ client.on("message", async (msg) => {
   msg.reply(response); // Kirimkan jawaban ke pengguna
 });
 
-app.get("/chat-history", async (req, res) => {
-  try {
-    const [rows] = await db.promise().query("SELECT * FROM chat_history ORDER BY timestamp ASC");
-    res.json({ success: true, data: rows });
-  } catch (err) {
-    console.error("Error fetching chat history:", err);
-    res.json({ success: false, message: "Error fetching chat history" });
-  }
-});
-
-client.on("message", async (msg) => {
-  const userMessage = msg.body.trim().toLowerCase();
-  const response = await getAnswer(userMessage);
-
-  try {
-    // Simpan pesan ke database
-    await db.promise().query("INSERT INTO chat_history (sender, message, timestamp) VALUES (?, ?, NOW())", ["user", userMessage]);
-    await db.promise().query("INSERT INTO chat_history (sender, message, timestamp) VALUES (?, ?, NOW())", ["bot", response]);
-
-    msg.reply(response);
-  } catch (err) {
-    console.error("Error saving message to database:", err);
-  }
-});
+// app.get("/chat-history", async (req, res) => {
+//   try {
+//     const [rows] = await db.promise().query("SELECT * FROM chat_history ORDER BY timestamp ASC");
+//     res.json({ success: true, data: rows });
+//   } catch (err) {
+//     console.error("Error fetching chat history:", err);
+//     res.json({ success: false, message: "Error fetching chat history" });
+//   }
+// });

@@ -99,9 +99,9 @@
                         </div>
                     </div>
                 </div>
-                <?php require_once("../includes/footer.php"); ?>
             </div>
         </div>
+        <?php require_once("../includes/footer.php"); ?>
     </div>
     <?php require_once("../includes/script.php"); ?>
 

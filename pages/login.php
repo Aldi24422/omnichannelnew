@@ -21,14 +21,14 @@ if (isset($_GET['error'])) {
         // JavaScript untuk toggle visibility password
         function togglePassword() {
             var passwordField = document.getElementById('password');
-            var passwordIcon = document.getElementById('password-icon');
+            var toggleText = document.getElementById('toggle-password');
 
             if (passwordField.type === 'password') {
                 passwordField.type = 'text';
-                passwordIcon.innerText = 'Hide';
+                toggleText.innerText = 'Hide Password';
             } else {
                 passwordField.type = 'password';
-                passwordIcon.innerText = 'Show';
+                toggleText.innerText = 'Show Password';
             }
         }
     </script>
@@ -72,7 +72,10 @@ if (isset($_GET['error'])) {
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input class="form-control" type="password" id="password" name="password" required placeholder="*********">
-                                    <button type="button" class="btn btn-link p-0" id="password-icon" onclick="togglePassword()">Show</button>
+                                    <!-- Tulisan Dinamis Show/Hide Password -->
+                                    <div style="text-align: right; margin-top: 5px;">
+                                        <a href="#" id="toggle-password" onclick="togglePassword(); return false;" style="text-decoration: none; font-size: 14px;">Show Password</a>
+                                    </div>
                                 </div>
 
                                 <!-- Tombol Login -->

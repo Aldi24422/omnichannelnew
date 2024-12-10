@@ -66,10 +66,8 @@
                                                     <label class="form-label" for="rolePetugas">Role Petugas</label>
                                                     <select class="form-select digits" id="rolePetugas" name="role" required>
                                                         <option value="">--Pilih Role--</option>
-                                                        <option value="admin">Admin Utama</option>
+                                                        <option value="admin">Admin</option>
                                                         <option value="petugas whatsapp">Petugas WhatsApp</option>
-                                                        <!-- <option value="petugas instagram">Petugas Instagram</option>
-                                                        <option value="petugas x">Petugas X</option> -->
                                                     </select>
                                                 </div>
                                             </div>

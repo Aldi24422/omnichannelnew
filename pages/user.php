@@ -10,8 +10,8 @@ if (!isset($_SESSION['username'])) {
 }
 ?>
 
- <!DOCTYPE html>
- <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <?php
@@ -126,12 +126,61 @@ if (!isset($_SESSION['username'])) {
                                                         <td><?= htmlspecialchars($user['username']) ?></td>
                                                         <td><?= htmlspecialchars($user['role']) ?></td>
                                                         <td>
-                                                            <form method="POST" class="d-inline">
+                                                            <!-- <form method="POST" class="d-inline">
                                                                 <input type="hidden" name="action" value="update">
                                                                 <input type="hidden" name="id" value="<?= $user['id'] ?>">
                                                                 <button type="button" class="btn btn-pill btn-primary btn-xs" data-bs-toggle="modal" data-bs-target="#editPertanyaan<?= $user['id'] ?>"><i data-feather="edit"></i></button>
+                                                            </form> -->
+
+                                                            <form method="POST" action="process_login.php?action=edit">
+                                                                <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                                <input type="hidden" name="nama" value="<?= $user['nama'] ?>">
+                                                                <input type="hidden" name="username" value="<?= $user['username'] ?>">
+                                                                <input type="hidden" name="password" value="<?= $user['password'] ?>">
+                                                                <input type="hidden" name="role" value="<?= $user['role'] ?>">
+                                                                <button type="button" class="btn btn-pill btn-primary btn-xs" data-bs-toggle="modal" data-bs-target="#editUsers<?= $user['id'] ?>"><i data-feather="edit"></i></button>
+                                                                <!-- Kolom lainnya seperti nama, username, role, dan password -->
                                                             </form>
-                                                            |
+
+                                                            <div class="modal fade" id="editUsers<?= $user['id'] ?>" tabindex="-1">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <form method="POST" action="../CRUD/process_login.php?action=edit">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title">Edit Pengguna</h5>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                                                                                <div class="mb-3">
+                                                                                    <label for="namePetugas" class="form-label">Nama Pengguna</label>
+                                                                                    <input type="text" class="form-control" id="namePetugas" name="nama" value="<?= htmlspecialchars($user['nama']) ?>" required>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label for="userPetugas" class="form-label">Username</label>
+                                                                                    <input type="text" class="form-control" id="userPetugas" name="username" value="<?= htmlspecialchars($user['username']) ?>" required>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label for="rolePetugas" class="form-label">Role</label>
+                                                                                    <select class="form-select" id="rolePetugas" name="role" required>
+                                                                                        <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                                                                                        <option value="petugas whatsapp" <?= $user['role'] === 'petugas whatsapp' ? 'selected' : '' ?>>Petugas WhatsApp</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label for="password" class="form-label">Password</label>
+                                                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
                                                             <form method="POST" class="d-inline">
                                                                 <input type="hidden" name="action" value="delete">
                                                                 <input type="hidden" name="id" value="<?= $user['id'] ?>">
